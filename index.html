@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Interactive 3D Structure of Glucose Molecule</title>
+    <script type="text/javascript" src="three.min.js"></script>
+    <script type="text/javascript" src="OrbitControls.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+<div id="WebGL-output">
+</div>
+
+<script type="text/javascript">
+
+    var camera;
+    var scene;
+    var renderer;
+
+    // To initiate work once everything is loaded
+    function init() {
+
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        renderer = new THREE.WebGLRenderer();
+
+        renderer.setClearColor(new THREE.Color(0xEEEEEE, 1.0));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        //Creating Carbon Atoms
+        var carbonGeometry = new THREE.SphereGeometry(4, 20, 20);
+        var carbonMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
+        var carbon = [];
+        for(var i=0; i<6; i++)
+          carbon.push(new THREE.Mesh(carbonGeometry, carbonMaterial));
+
+        //Positioning the carbon atoms
+        carbon[0].position.x = -15.99;
+        carbon[0].position.y = 2.73;
+        carbon[0].position.z = -2.28;
+
+        carbon[1].position.x = -10.32;
+        carbon[1].position.y = -10.69;
+        carbon[1].position.z = 2.44;
+
+        carbon[2].position.x = 4.06;
+        carbon[2].position.y = -12.10;
+        carbon[2].position.z = -2.66;
+
+        carbon[3].position.x = 12.34;
+        carbon[3].position.y = -0.22;
+        carbon[3].position.z = 2.32;
+
+        carbon[4].position.x = 26.57;
+        carbon[4].position.y = -1.24;
+        carbon[4].position.z = -3.22;
+
+        carbon[5].position.x = -6.94;
+        carbon[5].position.y = 14.04;
+        carbon[5].position.z = 2.69;
+
+        //Adding the carbon atoms to the scene
+        scene.add(carbon[1], carbon[2], carbon[3], carbon[4], carbon[5], carbon[0]);
+
+        //Creating Oxygen Atoms
+        var oxygenGeometry = new THREE.SphereGeometry(3, 40, 40);
+        var oxygenMaterial = new THREE.MeshLambertMaterial({color: 0xff0000});
+
+        var oxygen = [];
+        for(var i=0; i<6; i++)
+          oxygen.push(new THREE.Mesh(oxygenGeometry, oxygenMaterial));
+
+        //Positioning Oxygen Atoms
+        oxygen[0].position.x = -11.86;
+        oxygen[0].position.y = 26.55;
+        oxygen[0].position.z = -2.14;
+
+        oxygen[1].position.x = -29.15;
+        oxygen[1].position.y = 4.48;
+        oxygen[1].position.z = 3.02;
+
+        oxygen[2].position.x = -18.29;
+        oxygen[2].position.y = -21.35;
+        oxygen[2].position.z = -2.76;
+
+        oxygen[3].position.x = 9.71;
+        oxygen[3].position.y = -24.26;
+        oxygen[3].position.z = 2.29;
+
+        oxygen[4].position.x = 6.35;
+        oxygen[4].position.y = 11.95;
+        oxygen[4].position.z = -2.15;
+
+        oxygen[5].position.x = 34.60;
+        oxygen[5].position.y = 9.18;
+        oxygen[5].position.z = 2.35;
+
+        //Placing Oxygen Atoms in the Scene
+        scene.add(oxygen[1], oxygen[2], oxygen[3], oxygen[4], oxygen[5], oxygen[0]);
+
+        //Creating Hydrogen Atoms
+        var hydrogenGeometry = new THREE.SphereGeometry(2, 30, 30);
+        var hydrogenMaterial = new THREE.MeshLambertMaterial({color: 0x808080});
+        var hydrogen = [];
+        for(var i=0; i<12; i++)
+          hydrogen.push(new THREE.Mesh(hydrogenGeometry, hydrogenMaterial));
+
+        //Positioning Hydrogen Atoms
+        hydrogen[0].position.x = -16.39;
+        hydrogen[0].position.y = 2.90;
+        hydrogen[0].position.z = -13.17;
+
+        hydrogen[1].position.x = -10.38;
+        hydrogen[1].position.y = -11.05;
+        hydrogen[1].position.z = 13.33;
+
+        hydrogen[2].position.x = 4.07;
+        hydrogen[2].position.y = -12.23;
+        hydrogen[2].position.z = -13.55;
+
+        hydrogen[3].position.x = 12.66;
+        hydrogen[3].position.y = -0.33;
+        hydrogen[3].position.z = 13.22;
+
+        hydrogen[4].position.x = 30.82;
+        hydrogen[4].position.y = -10.92;
+        hydrogen[4].position.z = -0.56;
+
+        hydrogen[5].position.x = 26.32;
+        hydrogen[5].position.y = -0.24;
+        hydrogen[5].position.z = -14.07;
+
+        hydrogen[6].position.x = -6.87;
+        hydrogen[6].position.y = 14.12;
+        hydrogen[6].position.z = 13.59;
+
+        hydrogen[7].position.x = -6.60;
+        hydrogen[7].position.y = 34.18;
+        hydrogen[7].position.z = 0.62;
+
+        hydrogen[8].position.x = -33.36;
+        hydrogen[8].position.y = -12.79;
+        hydrogen[8].position.z = 0.430;
+
+        hydrogen[9].position.x = -27.55;
+        hydrogen[9].position.y = -21.04;
+        hydrogen[9].position.z = -0.010;
+
+        hydrogen[10].position.x = 4.93;
+        hydrogen[10].position.y = -32.21;
+        hydrogen[10].position.z = -0.44;
+
+        hydrogen[11].position.x = 43.77;
+        hydrogen[11].position.y = 9.15;
+        hydrogen[11].position.z = -0.72;
+
+        //Adding Hydrogen Atoms to Scene
+        scene.add(hydrogen[1], hydrogen[2], hydrogen[3], hydrogen[4]);
+        scene.add(hydrogen[5], hydrogen[6], hydrogen[7], hydrogen[8]);
+        scene.add(hydrogen[9], hydrogen[10], hydrogen[11], hydrogen[0]);
+
+        //Creating Bonds
+        var lineMaterial = new THREE.LineBasicMaterial({color: 0x808080});
+
+        var line1Geometry = new THREE.Geometry();
+        var line2Geometry = new THREE.Geometry();
+        var line3Geometry = new THREE.Geometry();
+        var line4Geometry = new THREE.Geometry();
+        var line5Geometry = new THREE.Geometry();
+        var line6Geometry = new THREE.Geometry();
+        var line7Geometry = new THREE.Geometry();
+        var line8Geometry = new THREE.Geometry();
+        var line9Geometry = new THREE.Geometry();
+        var line10Geometry = new THREE.Geometry();
+        var line11Geometry = new THREE.Geometry();
+        var line12Geometry = new THREE.Geometry();
+        var line13Geometry = new THREE.Geometry();
+        var line14Geometry = new THREE.Geometry();
+        var line15Geometry = new THREE.Geometry();
+        var line16Geometry = new THREE.Geometry();
+        var line17Geometry = new THREE.Geometry();
+        var line18Geometry = new THREE.Geometry();
+        var line19Geometry = new THREE.Geometry();
+        var line20Geometry = new THREE.Geometry();
+        var line21Geometry = new THREE.Geometry();
+        var line22Geometry = new THREE.Geometry();
+        var line23Geometry = new THREE.Geometry();
+        var line24Geometry = new THREE.Geometry();
+
+        line1Geometry.vertices.push(carbon[0].position, carbon[1].position);
+        var bond01 = new THREE.Line(line1Geometry, lineMaterial);
+        line2Geometry.vertices.push(carbon[1].position, carbon[2].position);
+        var bond12 = new THREE.Line(line2Geometry, lineMaterial);
+        line3Geometry.vertices.push(carbon[2].position, carbon[3].position);
+        var bond23 = new THREE.Line(line3Geometry, lineMaterial);
+        line4Geometry.vertices.push(carbon[3].position, carbon[4].position);
+        var bond34 = new THREE.Line(line4Geometry, lineMaterial);
+        line5Geometry.vertices.push(carbon[0].position, carbon[5].position);
+        var bond05 = new THREE.Line(line5Geometry, lineMaterial);
+        line6Geometry.vertices.push(carbon[5].position, oxygen[4].position);
+        var bond510 = new THREE.Line(line6Geometry, lineMaterial);
+        line7Geometry.vertices.push(carbon[5].position, oxygen[0].position);
+        var bond56 = new THREE.Line(line7Geometry, lineMaterial);
+        line8Geometry.vertices.push(carbon[0].position, oxygen[1].position);
+        var bond07 = new THREE.Line(line8Geometry, lineMaterial);
+        line9Geometry.vertices.push(carbon[1].position, oxygen[2].position);
+        var bond18 = new THREE.Line(line9Geometry, lineMaterial);
+        line10Geometry.vertices.push(carbon[2].position, oxygen[3].position);
+        var bond29 = new THREE.Line(line10Geometry, lineMaterial);
+        line11Geometry.vertices.push(carbon[3].position, oxygen[4].position);
+        var bond310 = new THREE.Line(line11Geometry, lineMaterial);
+        line12Geometry.vertices.push(carbon[4].position, oxygen[5].position);
+        var bond411 = new THREE.Line(line12Geometry, lineMaterial);
+        line13Geometry.vertices.push(carbon[0].position, hydrogen[0].position);
+        var bond012 = new THREE.Line(line13Geometry, lineMaterial);
+        line14Geometry.vertices.push(carbon[1].position, hydrogen[1].position);
+        var bond113 = new THREE.Line(line14Geometry, lineMaterial);
+        line15Geometry.vertices.push(carbon[2].position, hydrogen[2].position);
+        var bond214 = new THREE.Line(line15Geometry, lineMaterial);
+        line16Geometry.vertices.push(carbon[3].position, hydrogen[3].position);
+        var bond315 = new THREE.Line(line16Geometry, lineMaterial);
+        line17Geometry.vertices.push(carbon[4].position, hydrogen[4].position);
+        var bond416 = new THREE.Line(line17Geometry, lineMaterial);
+        line18Geometry.vertices.push(carbon[4].position, hydrogen[5].position);
+        var bond417 = new THREE.Line(line18Geometry, lineMaterial);
+        line19Geometry.vertices.push(carbon[5].position, hydrogen[6].position);
+        var bond518 = new THREE.Line(line19Geometry, lineMaterial);
+        line20Geometry.vertices.push(oxygen[0].position, hydrogen[7].position);
+        var bond619 = new THREE.Line(line20Geometry, lineMaterial);
+        line21Geometry.vertices.push(oxygen[1].position, hydrogen[8].position);
+        var bond720 = new THREE.Line(line21Geometry, lineMaterial);
+        line22Geometry.vertices.push(oxygen[2].position, hydrogen[9].position);
+        var bond821 = new THREE.Line(line22Geometry, lineMaterial);
+        line23Geometry.vertices.push(oxygen[3].position, hydrogen[10].position);
+        var bond922 = new THREE.Line(line23Geometry, lineMaterial);
+        line24Geometry.vertices.push(oxygen[5].position, hydrogen[11].position);
+        var bond1123 = new THREE.Line(line24Geometry, lineMaterial);
+
+        scene.add(bond01, bond12, bond23, bond34, bond05, bond510);
+        scene.add(bond56, bond07, bond18, bond29, bond310, bond411);
+        scene.add(bond012, bond113, bond214, bond315, bond416, bond417);
+        scene.add(bond518, bond619, bond720, bond821, bond922, bond1123);
+
+            camera.position.x = 0;
+            camera.position.y = 100;
+            camera.position.z = 0;
+            camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+        var orbitControls = new THREE.OrbitControls(camera);
+        orbitControls.autoRotate = true;
+        var clock = new THREE.Clock();
+
+        // Adding Directional Lights
+        var light1 = new THREE.DirectionalLight(0xffffff, 0.7);
+        light1.position.set(-40, 60, -10);
+        scene.add(light1);
+
+        var light2 = new THREE.DirectionalLight(0xffffff, 0.7);
+        light2.position.set(40, -60, 10);
+        scene.add(light2);
+
+        var light3 = new THREE.DirectionalLight(0xffffff, 0.7);
+        light3.position.set(40, 60, -10);
+        scene.add(light3);
+
+        var light4 = new THREE.DirectionalLight(0xffffff, 0.7);
+        light4.position.set(-40, -60, 10);
+        scene.add(light4);
+
+        document.getElementById("WebGL-output").appendChild(renderer.domElement);
+
+        render();
+
+        function render() {
+            var delta = clock.getDelta();
+            orbitControls.update(delta);
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+        }
+
+    }
+    function onResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+
+    window.onload = init;
+
+    // listen to the resize events
+    window.addEventListener('resize', onResize, false);
+
+</script>
+</body>
+</html>
